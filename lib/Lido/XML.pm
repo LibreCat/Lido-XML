@@ -27,20 +27,20 @@ has 'reader'    => (is => 'ro');
 has 'writer'    => (is => 'ro');
 
 sub BUILD {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	my @schemes = Lido::XML::LIDO_1_0->new->content;
+    my @schemes = Lido::XML::LIDO_1_0->new->content;
     my $schema  = XML::Compile::Cache->new(\@schemes);
     my $type    = pack_type $self->namespace, $self->root;
 
     $self->{reader} = $schema->compile(READER => $type);
     $self->{writer} = $schema->compile(WRITER => $type, ( prefixes => $self->prefixes ) );
 
-	$schema = undef;
+    $schema = undef;
 }
 
 sub parse {
-	my ($self,$input) = @_;
+    my ($self,$input) = @_;
     my $perl;
     try {
         $perl = $self->reader->($input);
@@ -51,16 +51,16 @@ sub parse {
 }
 
 sub to_xml {
-	my ($self,$data) = @_;
-	my $doc    = XML::LibXML::Document->new('1.0', 'UTF-8');
+    my ($self,$data) = @_;
+    my $doc    = XML::LibXML::Document->new('1.0', 'UTF-8');
     my $xml;
     try {
- 		$xml    = $self->writer->($doc, $data);
+        $xml    = $self->writer->($doc, $data);
     } catch {
-    	Lido::XML::Error->throw(sprintf('%s', $_));
+        Lido::XML::Error->throw(sprintf('%s', $_));
     };
-	$doc->setDocumentElement($xml);
-	$doc->toString(1);
+    $doc->setDocumentElement($xml);
+    $doc->toString(1);
 }
 
 1;

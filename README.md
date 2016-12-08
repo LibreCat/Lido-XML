@@ -49,6 +49,8 @@ Patrick Hochstenbach, `patrick.hochstenbach at ugent.be`
 
 Matthias Vandermaesen
 
+Pieter De Praetere
+
 # COPYRIGHT AND LICENSE
 
 The Perl software is copyright (c) 2016 by Patrick Hochstenbach.
