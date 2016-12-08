@@ -2,6 +2,10 @@ Revision history for Catmandu
 
 {{$NEXT}}
 
+0.06  2016-12-08 12:04:08 CET
+  - added Throwable::Error so LibXML errors can be caught
+  - added support for roundtrip lido within one process
+  
 0.05  2016-09-22 06:51:26 CEST
   - adding prefixes option when creating a Lido parser
 
