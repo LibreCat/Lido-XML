@@ -4,9 +4,12 @@ our $VERSION = '0.05';
 
 use Moo;
 use Lido::XML::LIDO_1_0;
+use Lido::XML::Error;
 use XML::Compile;
+use XML::Compile::Cache;
 use XML::Compile::Schema;
 use XML::Compile::Util 'pack_type';
+use Try::Tiny;
 
 has 'namespace' => (is => 'ro' , default => sub {'http://www.lido-schema.org'});
 has 'root'      => (is => 'ro' , default => sub {'lido'});
@@ -19,44 +22,43 @@ has 'prefixes'  => (is => 'ro' , default => sub {
                         'xml' => 'http://www.w3.org/XML/1998/namespace'
                       ]
                     });
-has 'schema'    => (is => 'lazy');
-has 'reader'    => (is => 'lazy');
-has 'writer'    => (is => 'lazy');
 
-sub _build_schema {
-	my $self = shift;
-	my $schema = XML::Compile::Schema->new();
+has 'reader'    => (is => 'ro');
+has 'writer'    => (is => 'ro');
+
+sub BUILD {
+	my ($self) = @_;
 
 	my @schemes = Lido::XML::LIDO_1_0->new->content;
+    my $schema  = XML::Compile::Cache->new(\@schemes);
+    my $type    = pack_type $self->namespace, $self->root;
 
-	for my $s (@schemes) {
-	   	$schema->importDefinitions($s);
-	}
+    $self->{reader} = $schema->compile(READER => $type);
+    $self->{writer} = $schema->compile(WRITER => $type, ( prefixes => $self->prefixes ) );
 
-	$schema;
-}
-
-sub _build_reader {
-	my $self = shift;
-	my $type      = pack_type $self->namespace, $self->root;
-	$self->schema->compile(READER => $type);
-}
-
-sub _build_writer {
-	my $self = shift;
-	my $type      = pack_type $self->namespace, $self->root;
-	$self->schema->compile(WRITER => $type, ( prefixes => $self->prefixes ) );
+	$schema = undef;
 }
 
 sub parse {
 	my ($self,$input) = @_;
-	$self->reader->($input);
+    my $perl;
+    try {
+        $perl = $self->reader->($input);
+    } catch {;
+        Lido::XML::Error->throw(sprintf('%s', $_));
+    };
+    $perl;
 }
 
 sub to_xml {
 	my ($self,$data) = @_;
 	my $doc    = XML::LibXML::Document->new('1.0', 'UTF-8');
-	my $xml    = $self->writer->($doc, $data);
+    my $xml;
+    try {
+ 		$xml    = $self->writer->($doc, $data);
+    } catch {
+    	Lido::XML::Error->throw(sprintf('%s', $_));
+    };
 	$doc->setDocumentElement($xml);
 	$doc->toString(1);
 }

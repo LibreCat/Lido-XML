@@ -22,4 +22,8 @@ my $xml  = $x->to_xml($data);
 
 ok $xml  , 'transformed Perl into lido';
 
-done_testing;
+throws_ok {
+    $x->parse("t/lido-wrong.xml");
+} 'Lido::XML::Error' , 'caught errors';
+
+done_testing 6;
