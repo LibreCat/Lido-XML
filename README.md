@@ -2,6 +2,12 @@
 
 Lido::XML - A Lido XML parser and writer
 
+# Status
+
+[![Build Status](https://travis-ci.org/LibreCat/Lido-XML.png)](https://travis-ci.org/LibreCat/Lido-XML)
+[![Coverage Status](https://coveralls.io/repos/LibreCat/Lido-XML/badge.png)](https://coveralls.io/r/LibreCat/Lido-XML)
+[![Kwalitee Score](http://cpants.cpanauthors.org/dist/Lido-XML.png)](http://cpants.cpanauthors.org/dist/Lido-XML)
+
 # SYNOPSIS
 
     use Lido::XML

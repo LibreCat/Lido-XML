@@ -5,9 +5,7 @@
 _build
 blib
 Build
-LICENSE
 Makefile.PL
-META.*
 MYMETA.*
 Lido-XML-*
 local
