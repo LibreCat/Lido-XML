@@ -68,7 +68,7 @@
          "web" : "https://github.com/LibreCat/Lido-XML"
       }
    },
-   "version" : "0.06",
+   "version" : "0.07",
    "x_contributors" : [
       "Matthias Vandermaesen <matthias@colada.be>",
       "Patrick Hochstenbach <patrick.hochstenbach@ugent.be>"

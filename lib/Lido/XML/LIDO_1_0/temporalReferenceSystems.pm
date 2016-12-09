@@ -2,7 +2,7 @@ package Lido::XML::LIDO_1_0::temporalReferenceSystems;
 
 use Moo;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub content {
 	my @lines = <DATA>;
