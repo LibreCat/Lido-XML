@@ -29,7 +29,7 @@ has 'writer'    => (is => 'ro');
 sub BUILD {
     my ($self) = @_;
 
-    my @schemes = Lido::XML::LIDO_1_0->new->content;
+    my @schemes = Lido::XML::LIDO_1_1->new->content;
     my $schema  = XML::Compile::Cache->new(\@schemes);
     my $type    = pack_type $self->namespace, $self->root;
 

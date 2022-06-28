@@ -4057,7 +4057,7 @@ __DATA__
 		<xs:attribute ref="lido:label"/>
 	</xs:attributeGroup>
 
-	<xs:complexType name="conceptMixedComplexType" mixed="true" id="conceptMixedComplexType">
+	<xs:complexType name="conceptMixedComplexType" id="conceptMixedComplexType">
 		<xs:annotation>
 			<xs:documentation>
 				<tei:ab type="description">Defines mixed content. Allows either elements as defined in
