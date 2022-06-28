@@ -12,7 +12,7 @@ Lido::XML - A Lido XML parser and writer
 
     use Lido::XML
 
-    my $lido = Lido::XML->new;
+    my $lido = Lido::XML->new(version => 'LIDO_1_1');
 
     my $perl = $lido->parse($xml_file);
 

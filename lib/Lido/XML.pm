@@ -4,6 +4,7 @@ our $VERSION = '0.08';
 
 use Moo;
 use Lido::XML::LIDO_1_1;
+use Lido::XML::LIDO_1_0;
 use Lido::XML::Error;
 use XML::Compile;
 use XML::Compile::Cache;
@@ -23,13 +24,22 @@ has 'prefixes'  => (is => 'ro' , default => sub {
                       ]
                     });
 
+has 'version'   => (is => 'ro' , default => sub { 'LIDO_1_0' });
 has 'reader'    => (is => 'ro');
 has 'writer'    => (is => 'ro');
 
 sub BUILD {
     my ($self) = @_;
 
-    my @schemes = Lido::XML::LIDO_1_1->new->content;
+    my @schemes;
+
+    if ($self->{version} && $self->{version} eq 'LIDO_1_1') {
+        @schemes = Lido::XML::LIDO_1_1->new->content;
+    }
+    else {
+        @schemes = Lido::XML::LIDO_1_0->new->content;
+    }
+
     my $schema  = XML::Compile::Cache->new(\@schemes);
     my $type    = pack_type $self->namespace, $self->root;
 
@@ -85,7 +95,7 @@ Lido::XML - A Lido XML parser and writer
 
     use Lido::XML
 
-    my $lido = Lido::XML->new;
+    my $lido = Lido::XML->new(version => 'LIDO_1_1');
 
     my $perl = $lido->parse($xml_file);
 
