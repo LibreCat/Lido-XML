@@ -2,7 +2,7 @@ package Lido::XML::LIDO_1_0::feature;
 
 use Moo;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 sub content {
 	my @lines = <DATA>;

@@ -9,6 +9,8 @@ die "usage: $0 name file [file...]" unless $name && @ARGV;
 
 my $pkgdir = "lib/Lido/XML/$name";
 
+mkdir $pkgdir;
+
 my @packages;
 
 for my $path (@ARGV) {
@@ -25,7 +27,7 @@ package Lido::XML::$name\::$package;
 
 use Moo;
 
-our \$VERSION = '0.01';
+our \$VERSION = '0.08';
 
 sub content {
 	my \@lines = <DATA>;
@@ -42,7 +44,7 @@ EOF
 my $perl =<<EOF;
 package Lido::XML::$name;
 
-our \$VERSION = '0.01';
+our \$VERSION = '0.08';
 
 use Moo;
 EOF

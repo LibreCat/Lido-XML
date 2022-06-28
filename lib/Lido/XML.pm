@@ -1,9 +1,9 @@
 package Lido::XML;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use Moo;
-use Lido::XML::LIDO_1_0;
+use Lido::XML::LIDO_1_1;
 use Lido::XML::Error;
 use XML::Compile;
 use XML::Compile::Cache;
